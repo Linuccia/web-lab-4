@@ -19,6 +19,7 @@ public class PointController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin
     @PostMapping("/points")
     PointDto addPoint(@RequestBody Point point, Principal user){
         point.setUser(userService.findByLogin(user.getName()));
@@ -26,6 +27,7 @@ public class PointController {
         return pointService.save(point).toPointDto();
     }
 
+    @CrossOrigin
     @GetMapping
     Collection<PointDto> getPoints(Principal user){
         Collection<Point> collection = pointService.findByUser(userService.findByLogin(user.getName()));
