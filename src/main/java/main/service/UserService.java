@@ -26,7 +26,8 @@ public class UserService {
         }
     }
 
-    public boolean getMatch(User user, String password){
-        return passwordEncoder.matches(password, user.getPassword());
+    public boolean getMatch(User user){
+        User required = findByLogin(user.getLogin());
+        return passwordEncoder.matches(user.getPassword(), required.getPassword());
     }
 }

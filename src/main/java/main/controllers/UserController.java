@@ -18,6 +18,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody User user){
+        System.out.println(user.getLogin());
         if (userService.save(user)){
             System.out.println("User " + user.getLogin() + " registered successfully!");
             return new ResponseEntity<>(HttpStatus.OK);
@@ -30,7 +31,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/login")
     ResponseEntity<?> logIn(@RequestBody User user){
-        if (userService.getMatch(user, user.getPassword())){
+        if (userService.getMatch(user)){
             System.out.println("User " + user.getLogin() + " entered successfully!");
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
