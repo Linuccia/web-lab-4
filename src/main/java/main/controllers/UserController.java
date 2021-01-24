@@ -19,13 +19,13 @@ public class UserController {
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody User user){
         System.out.println(user.getLogin());
-        if (userService.save(user)){
-            System.out.println("User " + user.getLogin() + " registered successfully!");
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            System.out.println("User " + user.getLogin() + " already exists!");
+        if (userService.findByLogin(user.getLogin()) != null) {
+            System.out.println("User " + user.getLogin() + " already registered!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        System.out.println("User " + user.getLogin() + " registered successfully!");
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin

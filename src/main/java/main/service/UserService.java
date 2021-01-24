@@ -17,13 +17,9 @@ public class UserService {
         return userRepository.findByLogin(login);
     }
 
-    public Boolean save(User user){
-        if (findByLogin(user.getLogin()) != null) return false;
-        else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return true;
-        }
+    public User save(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     public boolean getMatch(User user){

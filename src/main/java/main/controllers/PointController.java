@@ -28,7 +28,7 @@ public class PointController {
     }
 
     @CrossOrigin
-    @GetMapping
+    @GetMapping("/")
     Collection<PointDto> getPoints(String login){
         Collection<Point> collection = pointService.findByUser(userService.findByLogin(login));
         Collection<PointDto> newCol = new ArrayList<>();

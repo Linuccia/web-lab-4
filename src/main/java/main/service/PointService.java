@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.OneToMany;
 import java.util.Collection;
 
 @Service
 public class PointService {
     @Autowired
     private PointRepository pointRepository;
+
+    @OneToMany
+    private UserService userService;
 
     @Transactional
     public Point save(Point point){
