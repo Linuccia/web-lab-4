@@ -13,16 +13,16 @@ public class Point {
     private Double r;
     private Boolean hit;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     public Point() {}
 
-    public Point(Double x, Double y, Double r) {
+    public Point(Double x, Double y, Double r, Boolean hit) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.setHit();
+        this.hit = hit;
     }
 
     public Double getX() {
@@ -53,10 +53,8 @@ public class Point {
         return hit;
     }
 
-    public void setHit() {
-        if (x>=0 && x<=r && y<=0 && y>=r/2) this.hit = true;
-        else if (x<=0 && y>=0 && x*x+y*y<=r*r) this.hit = true;
-        else this.hit = (x >= 0 && y >= 0 && y <= -x + r / 2);
+    public void setHit(Boolean hit) {
+        this.hit = hit;
     }
 
     public User getUser() {
@@ -68,7 +66,7 @@ public class Point {
     }
 
     public PointDto toPointDto(){
-        return new PointDto(this.x, this.y, this.r, this.hit);
+        return new PointDto(this.x, this.y, this.r);
     }
 
     @Override

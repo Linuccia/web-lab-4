@@ -6,11 +6,11 @@ public class PointDto {
     private Double r;
     private Boolean hit;
 
-    public PointDto(Double x, Double y, Double r, Boolean hit) {
+    public PointDto(Double x, Double y, Double r) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.hit = hit;
+        setHit();
     }
 
     public Double getX() {
@@ -41,7 +41,13 @@ public class PointDto {
         return hit;
     }
 
-    public void setHit(Boolean hit) {
-        this.hit = hit;
+    public void setHit() {
+        if (x>=0 && x<=r && y<=0 && y>=-r/2) this.hit = true;
+        else if (x<=0 && y>=0 && x*x+y*y<=r*r) this.hit = true;
+        else this.hit = (x >= 0 && y >= 0 && y <= -x + r / 2);
+    }
+
+    public Point toPoint() {
+        return new Point(this.x, this.y, this.r, this.hit);
     }
 }

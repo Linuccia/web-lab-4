@@ -7,12 +7,10 @@ import main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/main")
 public class PointController {
     @Autowired
     private PointService pointService;
@@ -21,16 +19,18 @@ public class PointController {
 
     @CrossOrigin
     @PostMapping("/points")
-    PointDto addPoint(@RequestBody Point point, Principal user){
-        point.setUser(userService.findByLogin(user.getName()));
+    PointDto addPoint(@RequestBody PointDto pointDto, @RequestHeader String login){
+        Point point = pointDto.toPoint();
+        point.setUser(userService.findByLogin(login));
         System.out.println("Point " + point + " added!");
-        return pointService.save(point).toPointDto();
+        pointService.save(point);
+        return pointDto;
     }
 
     @CrossOrigin
     @GetMapping
-    Collection<PointDto> getPoints(Principal user){
-        Collection<Point> collection = pointService.findByUser(userService.findByLogin(user.getName()));
+    Collection<PointDto> getPoints(String login){
+        Collection<Point> collection = pointService.findByUser(userService.findByLogin(login));
         Collection<PointDto> newCol = new ArrayList<>();
         for (Point p:collection){
             newCol.add(p.toPointDto());

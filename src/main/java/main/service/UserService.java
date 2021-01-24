@@ -27,7 +27,11 @@ public class UserService {
     }
 
     public boolean getMatch(User user){
-        User required = findByLogin(user.getLogin());
-        return passwordEncoder.matches(user.getPassword(), required.getPassword());
+        if (findByLogin(user.getLogin()) == null) {
+            return false;
+        } else {
+            User required = findByLogin(user.getLogin());
+            return passwordEncoder.matches(user.getPassword(), required.getPassword());
+        }
     }
 }
