@@ -1,14 +1,17 @@
 package main.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     private String login;
     private String password;
+
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private Collection<Point> points;
 
     public User() {
     }
@@ -27,5 +30,34 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+//    public Collection<Point> getPoints() {
+//        return points;
+//    }
+//
+//    public void setPoints(Point point) {
+//        this.points.add(point);
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return login.equals(user.login);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+//                ", points=" + points +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import main.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -13,15 +14,18 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+//    @Transactional
     public User findByLogin(String login){
         return userRepository.findByLogin(login);
     }
 
+//    @Transactional
     public User save(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+//    @Transactional
     public boolean getMatch(User user){
         if (findByLogin(user.getLogin()) == null) {
             return false;

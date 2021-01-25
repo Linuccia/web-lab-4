@@ -33,7 +33,7 @@ public class UserController {
     ResponseEntity<?> logIn(@RequestBody User user){
         System.out.println(user.getLogin() + ", " + user.getPassword());
         if (userService.getMatch(user)){
-            System.out.println("User " + user.getLogin() + " entered successfully!");
+            System.out.println("User " + user + " entered successfully!");
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             System.out.println("Incorrect login or password!");

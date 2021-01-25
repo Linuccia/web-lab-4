@@ -20,21 +20,28 @@ public class PointController {
     @CrossOrigin
     @PostMapping("/points")
     PointDto addPoint(@RequestBody PointDto pointDto, @RequestHeader String login){
+        System.out.println("Request for adding the point");
         Point point = pointDto.toPoint();
         point.setUser(userService.findByLogin(login));
-        System.out.println("Point " + point + " added!");
         pointService.save(point);
+//        User user = userService.findByLogin(login);
+//        user.setPoints(point);
+//        pointService.save(point);
+        System.out.println("Point " + point + " added!");
         return pointDto;
     }
 
     @CrossOrigin
     @GetMapping("/")
-    Collection<PointDto> getPoints(String login){
+    Collection<PointDto> getPoints(@RequestHeader String login){
+        System.out.println("Request for points of user " + login);
         Collection<Point> collection = pointService.findByUser(userService.findByLogin(login));
+//        Collection<Point> collection = userService.findByLogin(login).getPoints();
         Collection<PointDto> newCol = new ArrayList<>();
         for (Point p:collection){
             newCol.add(p.toPointDto());
         }
+        System.out.println(newCol);
         return newCol;
     }
 }
